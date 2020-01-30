@@ -6,7 +6,7 @@ let connection = mysql.createConnection({
 host: "localhost",
 port: 3306,
 user: "root",
-password: "Gatorade63!",
+password: "",
 database: "employee_trackerDB"
 });
 
@@ -68,7 +68,7 @@ function updateEmployeeRole(){
                 let roleupdate = [newroleID, first_name, last_name];
                 connection.query(query, roleupdate, function(err, result){
                     if (err) throw err;
-                    console.log("Employee" + first_name + last_name + "'s role id number updated");
+                    console.log("Employee " + first_name + " " + last_name + "'s role id number updated");
                 });
             });
         });
@@ -266,7 +266,7 @@ function viewDRE(){
                 let query = "SELECT * FROM departments";
                 connection.query(query, function (err, res){
                     if (err) throw err;
-                    console.log(res);
+                    console.table(res);
                 });
                
                 }
@@ -279,7 +279,7 @@ function viewDRE(){
                 let query = "SELECT * FROM roles";
                  connection.query(query, function(err, res){
                      if (err) throw err;
-                     console.log(res);
+                     console.table(res);
                  });
                 }
                 viewRoles();
@@ -291,7 +291,7 @@ function viewDRE(){
                 let query = "SELECT * FROM employees";
                 connection.query(query, function(err, res){
                     if (err) throw err;
-                    console.log(res);
+                    console.table(res);
                 });
                
                 }
