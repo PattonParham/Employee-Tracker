@@ -85,10 +85,10 @@ function addDRE(){
                              message: "Input the department you would like to add:"
                          }).then(function(department){
                             let query = "INSERT INTO departments (name) VALUES (?)";
-                            let dept = department.add
+                            let dept = department.add;
                              connection.query(query, dept, function (err, result){
                                  if (err) throw err;
-                                 console.log("success");
+                                 console.log("Department added");
                              })
                             console.log(department.add)
                          })
@@ -107,6 +107,58 @@ function addDRE(){
             break;
             
             case "roles":
+                function addRole(){
+                    inquirer
+                    .prompt({
+                        name: "add",
+                        type: "input",
+                        message: "Input the title of the role you would like to add:"
+
+                    })
+                    .then(function(role){
+                        
+                        let title = role.add;
+                        inquirer.prompt({
+                            name: "addII",
+                            type: "input",
+                            message: "Input the salary of the title you just input:"
+
+                        }).then(function(sal){
+                            let salary = sal.addII
+                            inquirer.prompt({
+                            name: "addIII",
+                            type: "input",
+                            message: "Input the id of the department this role falls under:"
+
+                            }).then(function(dptID){
+                                let department_id = dptID.addIII;
+                                let r = [title, salary, department_id];
+                                let query = "INSERT INTO roles (title, salary, department_id) VALUES (?, ?, ?)";
+                                connection.query(query, r, function(err, result){
+                                    if (err) throw err;
+                                    console.log("Role added");
+                                });
+
+                            });
+                        });
+
+                    });
+                    
+
+
+                    // .then(function(role){
+                    //     let query = "INSERT INTO roles (title, salary, department_id) VALUES (?, ?, ?)";
+                    //     let title = role.add;
+                    //     let salary = role.addII;
+                    //     let deptID = role.addIII;
+                    //     let r = [title, salary, deptID]
+                    //     connection.query(query, r, function(err, result){
+                    //         if (err) throw err
+                    //     }) 
+                    
+
+                }
+                addRole();
             break;
 
             case "employees":
