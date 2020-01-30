@@ -6,7 +6,7 @@ let connection = mysql.createConnection({
 host: "localhost",
 port: 3306,
 user: "root",
-password: "",
+password: "Gatorade63!",
 database: "employee_trackerDB"
 });
 
@@ -44,6 +44,8 @@ inquirer
     });
 }
 
+function updateEmployeeRole(){};
+
 function addDRE(){
     inquirer
     .prompt({
@@ -58,6 +60,50 @@ function addDRE(){
     }).then(function(answer){
         switch (answer.action){
             case "departments":
+                // function addDept(){
+                //     inquirer
+                //     .prompt({
+                //         name: "add",
+                //         type: "input",
+                //         message: "Input the department you would like to add:"
+                //     })
+                //     .then(function(department){
+                //         let query = "INSERT INTO departments (name) VALUES (?)";
+                //         connection.query(query, {add: department.add}, function(err){
+                //             if (err) throw err;
+                //             console.log("Department added");
+                //         });
+                        
+
+                //     })
+                // }
+                function addDept(){
+                    inquirer
+                         .prompt({
+                             name: "add",
+                             type: "input",
+                             message: "Input the department you would like to add:"
+                         }).then(function(department){
+                            let query = "INSERT INTO departments (name) VALUES (?)";
+                            let dept = department.add
+                             connection.query(query, dept, function (err, result){
+                                 if (err) throw err;
+                                 console.log("success");
+                             })
+                            console.log(department.add)
+                         })
+     
+                     }
+                // function addDept(){
+                    
+                //     let query = "INSERT INTO departments (name) VALUES ('Company')";
+                //     connection.query(query, function (err, result){
+                //         if (err) throw err;
+                //         console.log("success");
+                //     })
+                // }
+
+                addDept();
             break;
             
             case "roles":
