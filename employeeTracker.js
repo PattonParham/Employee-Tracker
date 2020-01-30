@@ -44,7 +44,37 @@ inquirer
     });
 }
 
-function updateEmployeeRole(){};
+function updateEmployeeRole(){
+    inquirer
+    .prompt({
+        name: "first",
+        type: "input",
+        message: "Enter the first name of the employee you would like to update the role id of:"
+    }).then(function(namefirst){
+        let first_name = namefirst.first;
+        inquirer.prompt({
+           name: "last",
+           type: "input",
+           message: "Enter the last name of the employee you would like to update the role id of:" 
+        }).then(function(namelast){
+            let last_name = namelast.last;
+            inquirer.prompt({
+                name: "update",
+                type: "input",
+                message: "Enter the value you would like to update this employee's role id number to:"
+            }).then(function(updateid){
+                let newroleID = updateid.update;
+                let query = "UPDATE employees SET role_id = ? WHERE first_name = ? AND last_name = ?";
+                let roleupdate = [newroleID, first_name, last_name];
+                connection.query(query, roleupdate, function(err, result){
+                    if (err) throw err;
+                    console.log("Employee" + first_name + last_name + "'s role id number updated");
+                });
+            });
+        });
+    });
+
+};
 
 function addDRE(){
     inquirer
@@ -55,7 +85,7 @@ function addDRE(){
         choices: [
             "departments",
             "roles",
-            "employeees"
+            "employees"
         ]
     }).then(function(answer){
         switch (answer.action){
@@ -162,11 +192,55 @@ function addDRE(){
             break;
 
             case "employees":
+                function addEmployee(){
+                    inquirer
+                    .prompt({
+                    name: "add",
+                    type: "input",
+                    message: "Input the first name of the employee you would like to add:"
+                    }).then(function(first){
+                        let firstname = first.add;
+                        inquirer.prompt({
+                            name: "addII",
+                            type: "input",
+                            message: "Input the last name of the employee you would like to add:"
+                        }).then(function(last){
+                            let lastname = last.addII;
+                            inquirer.prompt({
+                                name: "addIII",
+                                type: "input",
+                                message: "Input the corresponding id number of the employee's role you would like to add:"
+
+                            }).then(function(rid){
+                                let role_id = rid.addIII;
+                                inquirer.prompt({
+                                    name: "addIV",
+                                    type: "input",
+                                    message: "Input the corresponding id number of the employee's manager:"
+
+                                }).then(function(mid){
+                                    let manager_id = mid.addIV;
+                                    let employee = [firstname, lastname, role_id, manager_id];
+                                    let query = "INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)";
+                                    connection.query(query, employee, function(err, result){
+                                        if (err) throw err;
+                                        console.log("Employee added");
+                                    });
+
+                                });
+                            });
+
+                        });
+
+                    });
+
+                };
+                addEmployee();
             break;
-        }
+        };
 
 
-    })
+    });
 
 }
 
