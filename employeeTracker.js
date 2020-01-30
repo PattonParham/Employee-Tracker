@@ -277,6 +277,7 @@ function viewDRE(){
                 case "roles":
                 function viewRoles(){
                 let query = "SELECT * FROM roles";
+                // let query = "SELECT * FROM roles, departments.name AS roles.department_id FROM roles LEFT JOIN departments ON roles.department = department.name ";
                  connection.query(query, function(err, res){
                      if (err) throw err;
                      console.table(res);
